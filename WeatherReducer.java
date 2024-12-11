@@ -186,7 +186,7 @@ public class WeatherReducer extends Reducer<Text, Text, Text, Text> {
                           new Text(String.format("%.2f", minHumidityYear)));
             context.write(new Text("Average Humidity of \"" + province + "\" in \"" + yearMonthOrYear + "\":"), 
                     	  new Text(String.format("%.2f", avgHumidityYear)));
-            context.write(new Text("Average Humidity of \"" + province + "\" in \"" + yearMonthOrYear + "\":"), 
+            context.write(new Text("Average Temperature of \"" + province + "\" in \"" + yearMonthOrYear + "\":"), 
                           new Text(String.format("%.2f", avgTempYear)));
             context.write(new Text("Average Wind speed of \"" + province + "\" in \"" + yearMonthOrYear + "\":"), 
                     	  new Text(String.format("%.2f", avgWindSpeedYear)));
@@ -253,7 +253,7 @@ public class WeatherReducer extends Reducer<Text, Text, Text, Text> {
         }
         
         for (Map.Entry<String, Double> entry : provinceYearlyTotalRain.entrySet()) {
-            if (entry.getValue() > minRainTotal) {
+            if (entry.getValue() < minRainTotal) {
             	minRainTotal = entry.getValue();
             	minRainTotalProvince = entry.getKey();
             }
@@ -286,7 +286,7 @@ public class WeatherReducer extends Reducer<Text, Text, Text, Text> {
             context.write(new Text("Province with lowest yearly average temperature:"), new Text(minTempProvince + " with " + minTemp));
             context.write(new Text("Province with highest yearly total rain:"), new Text(maxRainTotalProvince + " with " + maxRainTotal));
             context.write(new Text("Province with lowest yearly total rain:"), new Text(minRainTotalProvince + " with " + minRainTotal));
-            context.write(new Text("Province with highest yearly average rain:"), new Text(maxRainYearProvince + " with " + maxRainYear));
+            context.write(new Text("Province with highest daily average rain:"), new Text(maxRainYearProvince + " with " + maxRainYear));
     }
     
     private double calculateTrend(TreeMap<Integer, Double> data) {
